@@ -1,0 +1,159 @@
+% Ausarbeitung der Architektur
+\section{Architektur von Softwaresystemen}
+\label{sec:softwarearchitektur}
+
+% Text
+
+Die virtuelle Welt wächst immer schneller und schneller, die Digitalisierung ist mitten im Gange. Schlagzeilen über Industrie 4.0, IoT, Cloud, Block Chain, DevOps, BigData, AI tauchen immer öfter in digitalen Nachrichten Welt auf. Alle Unternehmen setzten sich das Ziel, das Unternehmen zu modernisieren, so wie die Optimierung der Unternehmensprozesse, diese sollen flexibler, schneller und effizienter ablaufen. Auch Privat Personen rüsten stark nach, ein Leben ohne Smartphone ist heutzutage gar nicht mehr vorstellbar. Navigation, Kommunikation, Unterhaltung, Shopping, Banking und vieles mehr damit möglich, ein Gerät für alle Fälle. Allein im 2. Quartal 2019 stehen über 4.5 Millionen Anwendungen für Smartphone zur Verfügung und es werden täglich immer mehr.
+%Appfigures. (2019). Anzahl der verfügbaren Apps in den Top App-Stores im 2. Quartal 2019. Statista. Statista GmbH. Zugriff: 26. August 2019. https://de.statista.com/statistik/daten/studie/208599/umfrage/anzahl-der-apps-in-den-top-app-stores/
+
+Der Wandel unter dem Schlagwort \grqq{}Digitale Transformation\grqq{}, hat natürlich auch gravierende Auswirkungen auf die Systemarchitekturen. Den Aufbau solche Systeme sollen Zukunftsfähig sein, obwohl dies nicht so einfach ist, da es heute nicht bekannt ist, was morgen erscheinen werden soll. Die Gefahr besteht darin das viele der IT-Systeme in Ihrer Existenz bedroht sind ohne nennenswerte Modularisierung. Das Ziel muss also sein die Systemarchitektur möglichst flexibel beziehungsweise modular zu gestalten.\\
+\todo[inline]{Referenz: s17-18 Grundlagen des Modularen Softwareentwurfs}
+
+Die Modularisierung ermöglicht die Beherrschung der \grqq{}Digitale Transformation\grqq{}. Dadurch entstehen Flexibilitätsvorteile, was damit die ideale Reaktion auf das dynamische Wachstum der Digitalisierung ist. Somit handelt es sich beim Thema Modularisierung um eine der wichtigste Hauptaufgabe der Softwarearchitektur. Die Modularisierung eines IT-Systems ist erfühlt, wenn das gesamtes IT-System in einzelne Komponente zerlegt ist. Jede einzelne Komponente ist als ein abgegrenzter Teil des Systems definiert und übernimmt eine entsprechende Funktionalität des IT-Systems. Komponenten sind möglichst unabhängig von einander und garantieren die Ersetzbarkeit durch eine andere Komponente mit denselben Eigenschaften. Auch bei einen Ausfall von einer der Komponenten wird das System weiterhin funktionieren, ohne der Funktionalität von der ausgefallenen Komponente.
+\todo[inline]{Referenz: s2 Grundlagen des Modularen Softwareentwurfs}
+
+Die Zerlegung in einzelne Komponenten bieten folgende Vorteile:
+\begin{itemize}
+\item diese können ohne Seiteneffekte und Abstimmungsarbeit weiterentwickelt werden.(zitiert)
+\item diese können unabhängig von Rest dokumentiert und verstanden werden.(zitiert)
+\item diese können an Ihren ein- und ausgehenden Schnittstellen isoliert getestet werden.(zitiert)
+\item diese können leicht ausgetauscht werden.(zitiert)
+\item diese sind flexibel an den Wachstum des IT-Systems (nicht zitiert)
+\item diese reduzieren die Komplexität des IT-Systems (nicht zitiert)
+\end{itemize}
+\todo[inline]{Zitiert: s3 Grundlagen des Modularen Softwareentwurfs}
+
+\begin{quote}
+Sollte eine Software mit der Zeit irgendwelche Probleme bekommen, sei es beispielweise mit der Stabilität oder mit der Wartbarkeit, so werden sich diese Probleme, so man auch immer auf Modularisierung geachtet hat, immer nur auf einen Teil des Systems beziehen und niemals auf die gesamte Software. Software ab einer gewissen Größenordnung, die keine erkennbaren Strukturen aufweist, kommt potenziell in existenzielle Bedrohung, sobald sie die ersten Probleme dieser Art aufweist.
+\end{quote}
+\todo[inline]{Zitiert: s3 Grundlagen des Modularen Softwareentwurfs}
+
+Ausgezeichnetes Beispiel dafür sind die aktuellen Hochschul-Apps. Diese wurden für jedes System separat Entwickelt mit Funktionalitäten die zu dieser Zeit erforderlich waren. Somit hat jedes IT-System eine eigene Softwarearchitektur bekommen und die Funktionalitäten wurden für jedes System auf eine andere Art und Weise implementiert. Durch bereits erwähnte Digitalisierung sind über Jahre neue Funktionalitäten und Anforderungen an die IT-Systeme entstanden, diese wurden bereits ausführlich in Kapitel \ref{sec:anforderung} beschrieben. Durch nicht modularisierte Gestaltung der Softwarearchitektur von bestehenden IT-Systemen führen dazu, dass gemeinsame Erweiterungen oder Änderungen der Anwendungen für alle IT-Systeme entweder aufwändig oder sogar nicht möglich ist. Der Erfolg einer Anwendung liegt in der Gestaltung der Softwarearchitektur. 
+
+Somit handelt es sich bei der Erstellung von Softwarearchitektur um die wichtigste der vielen Disziplinen der IT-Branche. Zu beachten ist das die Softwarearchitektur nicht nur aus Modularität besteht, es müssen genauso viele andere wichtigen Anforderungen und Prinzipien eingehalten werden um eine zukunftsfähige Softwarearchitektur zu erstellen. Auf diese Anforderungen und Prinzipien wird es in weiteren Unterkapiteln eingegangen. Außerdem muss berücksichtigt werden das nur modulare Softwarearchitekturen in frage kommen, denn das Ziel dieser Bachelorarbeit ist es, eine erweiterbare, betriebssystemunabhängige Hochschul-App zu entwickeln.
+
+
+\subsection{Definition}
+Die Realisierung von jeden Projekt benötigt immer einen Architekturentwurf. Egal welche Gewerbe es betrifft, ob Bau einer Brücke, Umsetzung eines Netzwerks, Management eines Konzerns oder in den Fall Implementierung einer Anwendung. So ein früher Entwurf der später noch detailliert beschrieben werden kann, bietet gute Einstiegskriterien für vorzeitige Bewertung, Entscheidung sowie Verteilung der Ressourcen. Außerdem lassen sich meistens vorzeitig die Probleme erkennen und schneller beheben. \\
+
+Bei Entwurf einer Anwendung wird die Spezifikation der Funktionalitäten in einzelne Komponente zerlegt um die Komplexität zu minimieren. Es wird der Aufbau der benötigten Teilsysteme sowie die Festlegung der Verbindungen und Abhängigkeiten der Komponenten und Funktionen beschrieben. Eine Softwarearchitektur besteht nicht nur aus der Anwendung, es müssen auch andere Schichten beachten werden, um einerseits die nicht-funktionalen Anforderungen abzudecken und andererseits die Anpassung an das System auf dem die Anwendung später implementiert werden soll sowie Festlegung der Middleware.%Middleware beschreibung der Kommunikationart der Software. 
+Somit ist die Entscheidung des Software-Designs einer der wichtigsten Punkte bei Erstellung einer Anwendung.
+\todo[inline]{Referenz: http://www.enzyklopaedie-der-wirtschaftsinformatik.de/lexikon/is-management/Systementwicklung/Softwarearchitektur}
+\todo[inline]{Referenz: s1 Grundlagen des Modularen Softwareentwurfs}
+
+\subsection{Nicht-funktionale Anforderungen}
+\label{sec:nfa}
+Die nicht-funktionale Anforderungen sind meisten die Anforderungen die nicht Explizit von Auftraggeber erwähnt werden, sondern eher als selbstverständlich bei einer Software gelten. Die meisten solcher Anforderungen sind in der Abbildung \ref{fig:anforderungen} zusehen.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/Anforderungen.pdf}
+\caption{Allgemeine Anforderungen an eine Architektur\label{fig:anforderungen}}
+\end{figure}
+Es ist immer wichtig bei einen Softwareentwurf über alle nicht-funktionale Anforderungen Gedanken zu machen, denn diese ermöglichen den Grundbaustein für eine Erfolgreiche und zukunftsfähige Anwendung. Dadurch können spätere Mängel leichter behoben werden, neue Anforderungen schneller umgesetzt werden sowie die Anwendung an den Wachstum der Hochschule angepasst werden.
+
+\subsection{Prinzipien}
+Ein weiterer wichtiger Grundbaustein ist die Beachtung von Prinzipien beim Softwareentwurf. Diese werden zu nicht-funktionalen Anforderungen aus der Abbildung \ref{fig:anforderungen} Architekturkonzept ergänzt. Das Resultierende Architekturkonzept in Abbildung \ref{fig:prinzip} bietet eine Basis zur Vorgehensweise bei der Entwicklung eines Softwareentwurfs.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/Prinzipien.pdf}
+\caption{Allgemeine Prinzipien an eine Architektur\label{fig:prinzip}}
+\end{figure}
+
+\subsubsection{KISS - Keep it Simple and Stupid}
+In 20. Jahrhundert hat amerikanischer Flugzeugkonstrukteur Clarence Leonard (Kelly) Johnson das KISS-Prinzip erfunden.
+\begin{quote}
+Reduce reports and other paperwork to a minimum.
+\end{quote}
+\todo[inline]{Zitiert: PDF s231 Johnsons Biographical Memoir http://www.nasonline.org/publications/biographical-memoirs/memoir-pdfs/johnson-clarence.pdf}
+Die Idee dahinter ist, das die Gestaltung der Maßnahmen oder Entscheidungen so wenig wie möglich Komplexität beinhalten, jedoch erfüllen diese die erwartete Arbeit und sind dazu flexibel genug um Änderungen vorzunehmen. Also soll die Umsetzung einfach, schnell, verständlich, logisch, begreifbar und passend an die Anforderungen und nicht auf die Möglichkeiten sein. Bei einer Softwarearchitektur darf aber bei Umsetzung von KISS nicht auf die angemessene Modularisierung dadurch verzichtet werden.   
+\todo[inline]{Referenz: s19 Grundlagen des Modularen Softwareentwurfs}
+
+Häufig wird beim Konzeptionieren versucht von Anfang an, auf alle möglichen Variationen der Anforderung einzugehen, dies beutetet auch die Variationen die noch gar nicht vom Auftraggeber beauftragt wurden, die aber wahrscheinlich später benötigt werden. Das Ziel davon ist in der Zukunft den zusätzlichen Aufwand für die Implementierung zu sparen. Das problem dabei ist, das die Wahrscheinlichkeit ziemlich gering ist das diese Zusätzliche Funktionalität tatsächlich in der Zukunft benötigt wird, dadurch wird aber unnötige Komplexität der Anwendung gesteigert und Flexibilität verringert. Da in der Praxis oft der Fall ist, dass nach der Implementation einer Funktionalität, diese nicht den Erwartungen des Auftragsgebers entspricht und die Anforderungen sich während des Entwicklungsprozesses ändern. 
+\todo[inline]{Referenz: s19 Grundlagen des Modularen Softwareentwurfs}
+
+Folgende Formel kann dazu diesen, besser abzuschätzen ob ein gewünschter Mehrwert tatsächlich vorher berücksichtigt werden soll:
+\begin{dmath}
+NutzenDesMehrwerts = (AufwandZurSpäterenErstellung * WahrscheinlichkeitDassManDieseSpäterAuchBenötigt)
+- AufwändeGleichVonAnfangAnZuBauen
+\end{dmath}
+\todo[inline]{Referenz: s20 Grundlagen des Modularen Softwareentwurfs}
+
+\subsubsection{DRY - Dont't Repeat Yourself}
+Durch generische Programmierung können sich Code-Duplikate vermieden werden und wiederholender Algorithmen an mehreren Stellen wiederverwendet werden. Die Idee ist also bei DRY-Prinzip, die Redundanzen von Programmstellen zu reduzieren beziehungsweise komplett zu vermeiden. Hier ist aber Vorsicht geboten, denn die nicht-funktionale Anforderungen wie Verfügbarkeit oder Wartbarkeit höhere Priorität haben. Man soll alle Prinzipien und Anforderungen auswerten und sogar eventuell priorisieren falls nötig um eine Ausgewogenen Softwarearchitektur erstellen zu können.
+\todo[inline]{Referenz: s21 Grundlagen des Modularen Softwareentwurfs}
+
+\subsubsection{Encapsulation - Prinzip der Kapselung}
+Das Konzept von \textit{Inforamtion Hidings} wurde bereits im Jahr 1972 von David Parnas vorgestellt:
+\todo[inline, color=green]{In Deutsch übersetzen?}
+\begin{quote}
+[...] The second decomposition was made using \grqq{}information hiding\grqq{} as a criterion. The modules no
+longer correspond to steps in the processing. The line
+storage module, for example, is used in almost every
+action by the system. Alphabetization may or may not
+correspond to a phase in the processing according to
+the method used. Similarly, circular shift might, in some
+circumstances, not make any table at all but calculate
+each character as demanded. Every module in the
+second decomposition is characterized by its knowledge
+of a design decision which it hides from all others. Its
+interface or definition was chosen to reveal as little as
+possible about its inner workings. [...] 
+\todo[inline]{Zitiert: Bericht für den Zitat finden}
+\end{quote}
+Der Zweck besteht darin eine Art Geheimnisprinzip zu erstellen um bestimmte Stellen zu schützen, ob für die Zugriffsberechtigungen oder um Integrität der Daten zu sichern. Es werden Komponente verborgen und eine Schnittstelle definiert für einen öffentlichen zugriff, somit hat es keine Auswirkung bei einer Änderung oder Austausch der Komponente. Außerdem wird die Robustheit der Anwendung hergestellt durch die erhöhte Begrenzung der Abhängigkeiten der Komponenten.
+\todo[inline]{Referenz: s21-22 Grundlagen des Modularen Softwareentwurfs}
+
+\subsubsection{Lose Kopplung}
+IT-Systeme bestehen meist aus mehreren Bausteinen, Komponenten und Subsystemen. Diese werden immer zwangsläufig Abhängigkeiten zwischen einander haben, da einfach das ganze IT-System nicht völlig isoliert werden kann. Die Idee der Lose Kopplung ist die Verbindungen der einzelnen Bausteinen zu Verringerung, auf der Hardware- und Softwareebene. Bei den Verbindungen sollen folgende Punkte berücksichtigt werden:
+\begin{itemize}
+\item Laufzeitumgebungen
+\item Ausführungsort
+\item Verwendete Technologien
+\item Ausführungszeit
+\item Daten und Formate bei der Kommunikation
+\end{itemize}
+\todo[inline]{Referenz: s25-26 Grundlagen des Modularen Softwareentwurfs}
+
+\subsubsection{Separation Of Concerns}
+Über das Prinzip Seperation Of Concerns, zu Deutsch etwa Trennung der Angelegenheiten, würde in Verlauf den Gesamtes Kapiteln immer wieder erwähnt und auf Wichtigkeit hingewiesen. Separation of Concerns ist das Prinzip der Modularität welches bereits ausführlich am Anfang des Kapitel \ref{sec:softwarearchitektur} ausführlich beschrieben wurde.
+\todo[inline]{Referenz: s31 Grundlagen des Modularen Softwareentwurfs}
+
+\subsubsection{Layering - Schichtenarchitektur}
+Wie bereits in Prinzip der Modularität beschrieben wurde, ist es wichtig beim Entwurf eines IT-Systems dieses in einzelne Komponente und Module zu zerlegen. Dabei bilden Komponenten in ihrem Zusammenspiel auf ihrer Ebene verschiedene Schichten. Dieser Schichten werden nach Funktionalität getrennt. Beispielhaft ist das in der Abbildung \ref{fig:schichten} dargestellt. Das System besteht auf 4 verschiedenen Schichten die wiederum einzelne Komponenten enthalten.
+\todo[inline]{Referenz: s35 Grundlagen des Modularen Softwareentwurfs}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/Layering.jpg}
+\caption{Schichtenarchitektur\label{fig:schichten}}
+\end{figure}
+
+Durch die Anwendung dieses Prinzips werden Architekturen großer Systemlandschaften sehr gut beherrschbar, da der menschliches Gehirn auf genau diese Art und Weise einen komplexen Sachverhalt begreift. Es zerlegt diesen nämlich einfach immer weiter in seine Teilbereiche.
+\todo[inline]{Referenz: s36 Grundlagen des Modularen Softwareentwurfs}
+
+\subsection{Fazit}
+Die Verbreitung der verteilten Programmen, aus Englischen Distributed Application haben sich in vergangenen Jahre ziemlich schnell weiterentwickelt. Solche Anwendungen laufen nicht auf den lokalen Rechner, sondern werden auf mehrere unabhängige Module unterteilt die wiederum auf mehreren unterschiedlichen Servern in den Netzwerk verteilt sind. Somit stellen verteilte Anwendungen eine Art verteilte beziehungsweise vernetzte Systeme dar. 
+\todo[inline]{Referenz: s3 Verteilte Systeme}
+Beispiel dafür wären die Cloud Computing Systeme, dieser sind auf Softwarearchitektur von Verteilten Systemen aufgebaut oder auch als Client-Server Architektur bekannt. In Abbildung \ref{fig:cloud_statistic} ist eine Statistik, in der Wachstum für die Nutzung von Cloud Computing Systemen in Unternehmen in Deutschland in den Jahren 2011 bis 2018 zu sehen. Bereits im Jahr 2018 benutzen 73\% der befragten Unternehmen Cloud Computing Systeme und weitere 19\% überlegen oder planen solche Systeme zu nutzen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/cloud_statistic.pdf}
+\caption{Nutzung von Cloud Computing\label{fig:cloud_statistic}}
+\end{figure}
+% Bitkom, Nutzung von Cloud Computing in Unternehmen in Deutschland in den Jahren 2011 bis 2018 Statista, https://de.statista.com/statistik/daten/studie/177484/umfrage/einsatz-von-cloud-computing-in-deutschen-unternehmen-2011/ (letzter Besuch 14. August 2019)
+
+Wie bereits erwähnt setzen Verteilte Systeme aus mehreren unabhängigen Modulen zusammen, die auf unterschiedlichen Servern implementiert sind. Durch die Kopplung der Module entsteht ein vollständiges System, welches die räumliche Trennung über die ganze Welt ermöglicht. Dies ermöglicht einen parallelen und effizienten Zugriff, z.B. gleichzeitig auf Stundenplan- und Mensadaten. Einen weiterer Vorteil, ist der Lastausgleich. Durch Modularisierung der Funktionalitäten und Verteilung dieser auf mehrere Server, kann die Verarbeitungslast von einer zentralen Server auf mehrere Server verteilt werden, um Serverauslastungen zu vermeiden. Außerdem wird ein hohes Maß an Fehlertoleranz, Ausfallsicherheit, Skalierbarkeit und Verfügbarkeit, das auf Basis Verteilter Systeme gewährleistet.
+\todo[inline]{Referenz: s5-6 Verteilte Systeme}
+
+Ausgehend von den bisherige beschriebenen Anforderungen und Prinzipien an die Softwarearchitektur, sowie die Wichtigkeit von der Modularisierung und Anforderung aus dem Kapitel \ref{sec:anforderung}, bieten Verteilte Systeme gute Voraussetzungen für die Architekturkonzepte der Hochschul-App. Dabei bieten Verteilte Systeme verschiedene Modelle der Systemarchitektur die teilweise aufeinander aufbauen:
+\begin{itemize}
+\item Client-Server-Modell
+\item Objektorientiertes Modell
+\item Komponentenbasiertes Modell
+\item Dienstorientiertes Modell
+\end{itemize}
+\todo[inline]{Referenz: s13 Verteilte Systeme}
+Verteilte Anwendungen basieren meist auf das Dienstorientiertes Modell, welches auch unter Service-orientiertes Architektur mit Web Services bekannt ist.
+\todo[inline]{Referenz: s13 Verteilte Systeme}
+Somit sind die Web Services ein Ansatz für die konkrete Implementierung der verteilte Anwendung und der Grundbaustein für die Hochschul-App.

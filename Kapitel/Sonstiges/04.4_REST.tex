@@ -1,0 +1,241 @@
+% REST playbook
+\section{REST API Design}
+\label{sec:ms}
+REST API ist kein industriell definierter Standard, deswegen gibt es Zahlreichen unterschiedliche Varianten der Implementierung und Umsetzung. Das Ziel dieses Kapitels ist es, allgemeingültige Richtlinien und Entwurfsstandards für die Erstellung einer REST API der Hochschul-App festzulegen. Diese Standards helfen beim weiteren Entwerfen von APIs, die intuitiv sind und von Entwickeln, die Sie verwenden leicht verstehen und wieder-/weiterverwenden können.\\
+
+REST API kann ich 4 Bereiche aufgeteilt werden: 
+\begin{enumerate}
+\item Ressourcen
+\item Request
+\item Response
+\item Hypermedia
+\end{enumerate}
+die in weiteren Unterkapiteln ausführlicher behandelt werden.
+
+\subsection{Ressourcen Design}
+Standards und Richtlinien für die Modellierung und Benennung von URI Ressourcen, sowie Handhabung der HTTP-Methoden.
+
+\subsubsection{Versionsverwaltung}
+Die Versionierung ist ein wichtiger Aspekt des API-Designs. Es kann jederzeit nachvollzogen werden, wer was wann geändert hat und bei einen Problem kann das System auf vorherige Version wiederhergestellt werden. Somit soll jeder API einer Versionsnummer zugeordnet werden. Die Version kann aus einer Hauptversion und optional aus einer Nebenversion bestehen. Es gibt verschiedene Ansätze für die Versionsverwaltung. Es können bei verschiedenen Methoden, Request Parameter oder bei individuellen Header die Versionierung verwendet werden. Zur Vereinfachung sollte KISS-Prinzip (Kapitel \ref{sec:prinzipien}) angewendet werden und die Version in Pfad der URI mit dem Präfix \glqq v\grqq{} und die Hauptversionsnummer angegeben werden. Bei folgenden Änderungen sollte die Version erhöht werden:
+\begin{itemize}
+\item Pflichtfeld wird als optional abgeändert oder andersherum
+\item Pflichtfeld oder optionales Feld wird eingefügt
+\item Ressourcen werden eingefügt, abgeändert oder entfernt
+\item Datentypen werden hinzugefügt, geändert, entfernt oder Eingeschränkt
+\item Ergänzung neuer Fehlercodes
+\end{itemize}
+
+\subsubsection{URI Namenskonvention}
+API URLs sollten folgende Kriterien enthalten:
+\begin{itemize}
+\item Adresse von der Server auf den die API gehostet wird.
+\item Kennzeichnung das es um eine API handelt
+\item Spezifizierung des API Namens
+\item Spezifizierung der Version der API
+\item Spezifizierung der Ressource
+\end{itemize}
+Durch Beachtung diese Kritierien sollte API URL folgend aussehen:
+\begin{verbatim}
+http[s]://<server-name>/api/<api-name>/<api-version>/<resource>
+https://hof-university.de/api/mensa-service/v1/menu
+\end{verbatim}
+
+\subsubsection{Ressourcen Namenskonvention}
+Folgende Namenskonversionen für Ressourcen sollten in Hochschul-App API eingehalten werden:
+
+\begin{itemize}
+\item Jede Ressource muss einen aussagekräftigen und selbsterklärenden Namen haben. 
+\item Wenn eine Ressource über Subressourcen verfügt, werden diese durch Schrägstriche getrennt und der Pfad zur Subressourcen sollte hierarchisch und selbsterklärend aufgebaut werden.
+\begin{verbatim}
+/menu
+/menu/{day}
+/menu/{day}/{kategorie}
+\end{verbatim}
+Die Ressource \verb|/menu| soll alle verfügbaren Informationen zur Menu liefern, \verb|/menu/today| nur für den heutigen Tag und \verb|/menu/today/desserts| nur für den heutigen Tag und nur für die Desserts.
+\item Keine CRUD Operationsnamen in Ressourcen verwenden.
+\item Keine Mischung zwischen Groß- und Kleinschreibung.
+\item Keine Verwendung von Zeichen, die eine URL-Codierung erfordern.
+\item Bindestrich anstelle eines Leerzeichens oder einer Unterstreichung.
+\end{itemize}
+
+\subsubsection{HTTP Methoden}
+Nach der Identifizierung der Ressourcen für eine API (Kapitel \ref{sec:funktionen}), muss die Aktion, die für diese Ressource ausgeführt werden soll festgelegt werden. Dafür werden die HTTP-Methoden verwendet um die ausführende Aktion anzugeben. Die primären und am häufigsten verwendete HTTP-Mehtoden sind POST, GET, PUT und DELETE. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm - 7.5 cm]{Bilder/rest_api.pdf}
+\caption{Wachstum der ProgrammableWeb API Archive von 2005\label{fig:api}}
+\end{figure}
+
+Diese Methode helfen bei der Ausführung der CRUD-Operationen für die Ressource. Die Richtlinie für die Verwendung der Methoden in der Hochschul-App API, wird in der Tabelle \ref{tab:httpmethoden} erläutert.
+
+\begin{table}[H]
+\begin{center}
+  \begin{tabular}{| l | l |}
+    \hline
+    GET		 									& Wird zum Abrufen oder Lesen der Informationen verwendet 
+    \\ \hline
+    POST									 		& Wird zum Erstellen einer neuen Ressource verwendet
+    \\ \hline
+    PUT									 		& Wird zum Aktualisieren/Änderung einer ganzen Ressource verwendet
+    \\ \hline
+    DELETE								 		& Wird zum Löschen einer vorhandenen Ressource verwendet
+    \\ \hline
+    PATCH								 		& Wird zum Aktualisieren/Änderung eines teils einer Ressource verwendet
+    \\ \hline
+    TRACE										& Wird zur Verfolgung von den Request verwendet.
+    \\ \hline
+    OPTIONS								 		& Anforderung einer Liste vorhandenen HTTP-Methoden für diese Ressource
+    \\ \hline
+    HEAD											& Ähnlich wie GET, jedoch wird nur der Responce-Header zurückgegeben
+    \\ \hline
+    CONNECT										& Bereitstellung eines SSL-Tunnels von Proxyservern %https://wiki.selfhtml.org/wiki/HTTP/Anfragemethoden
+    \\ \hline
+  \end{tabular}
+  \end{center}
+\caption[HTTP-Methoden]{Erläuterung der HTTP-Methoden}
+\label{tab:httpmethoden}
+\end{table}
+
+Die Methode TRACE kann dazu dienen, zur Prüfung der Requests auf Veränderung während der Übertragung. HEAD bietet die Möglichkeit z. B. die gecachten Daten auf Ihre Gültigkeit zur prüfen, ohne die ganzen Daten komplett neu anzufordern.
+%https://wiki.selfhtml.org/wiki/HTTP/Anfragemethoden
+
+\subsection{Request Struktur}
+\label{sec:reqstructure}
+Nachtrichten Struktur Richtlinien für Inhalt, Format, Header und Query Parameter der Nachricht.
+
+\subsubsection{Header}
+Die folgende Liste enthält HTTP-Header, die von Hochschul-App APIs verwendet werden sollen:
+\begin{itemize}
+\item Accept
+\item Authorization
+\item Content-Type
+\item X-HTTP-Method-Override
+\end{itemize}
+Payload-Format der Hochschul-App wird nur auf JSON beschränkt, da JSON einfach einige Vorteile gegenüber anderer Formate bietet, die in Kapitel \ref{sec:webservices} bereits erwähnt wurden. Mit dem Header Accept kann der Medientyp des erwarteten Antwortinhalts und mit den Content-Type den Medientyp der Request angegeben werden. Also wird der Mediatyp als \glqq application/json\grqq{} in Content-Type und Accept Header definiert. Der Header Authorization wird für die Benutzer Authentifizierung verwendet und der Header X-HTTP-Method-Override als x-api-key Header verwendet, für die Client Authentifizierung.
+\todo[inline]{accept, content-type, usw. formatieren}
+
+\subsubsection{Query Parameter}
+Query Parameter sollten möglichst vermieden werden. Zuerst soll immer versucht werden die Parameter als Subressourcen in der URI hierarchisch aufzubauen. Dies erhöht die Lesbarkeit, Verständlichkeit, Flexibilität und reduziert die Komplexität der Ressourcen. Jedoch manchmal lässt es sich nicht vermeiden Query Parameter verwenden zu müssen, meistens ist der Fall bei Filterung oder Sortierungen der Ressourcen. Werden Query Parameter verwendet, folgendes soll dann beachtet werden:
+\begin{itemize}
+\item Query Parameter sollen sich nur auf die spezifizierte Ressource beziehen
+\item Komplexe oder Aufwendigen Query Parameter, sollen in den Request Body übergeben werden.
+\end{itemize}
+
+\subsubsection{Aufteilung einer Ressource}
+Wenn eine Ressource eine große Menge von Ergebnissen zurückgeben kann, soll diese auf Teilmengen aufgeteilt werden wegen Perfomance gründen. Folgende Richtlinien sollen bei Aufteilung einer Ressource beachtet werden:
+
+\begin{itemize}
+\item Die Größe der Teilmenge sollte auf einen default Wert festgelegt werden
+\item Der default Wert kann durch Client geändert werden
+\item Das Ergebnis der Teilmenge sollten folgende Metadaten enthalten:
+	\begin{itemize}
+	\item Link zur ersten Seite
+	\item Link zur vorherigen Seite, falls vorhanden
+	\item Link zur aktuellen Seite
+	\item Link zur nächsten Seite, falls vorhanden
+	\item Link zur letzten Seite
+	\item die Gesamtzahl der Teilmengen
+	\end{itemize}
+\item Die Seite der Teilmenge sollte mit Parameter \glqq offset\grqq{} gekennzeichnet werden
+\item Die Parameter offset und default Wert kann als Query Parameter übergeben werden
+\end{itemize}
+Mögliche Umsetzung dieser Richtlinien könnte folgend aussehen:
+\begin{verbatim}
+{ 
+    links: {
+        first: "/stundenplan-service/v1/lectures?offset=0,limit=50"
+        prev:  "/stundenplan-service/v1/lectures?offset=1,limit=50"
+        self:  "/stundenplan-service/v1/lectures?offset=2,limit=50"
+        next:  "/stundenplan-service/v1/lectures?offset=3,limit=50"
+        last:  "/stundenplan-service/v1/lectures?offset=23,limit=50"
+    }
+}
+\end{verbatim} 
+\todo[inline]{Metadaten Beispiel formatieren}
+
+\subsection{Response Handling}
+Behandlung von Antworten, indem Richtlinien für Format von Antwortinhalten, HTTP-Status, kombinierte Antworten aus mehreren Aufrufen und das Behandeln von asynchronen aufrufen enthält. 
+
+\subsubsection{Responce Inhaltsformat}
+Der Format von Antwortinhalten ist auf JSON bei der Hochschul-App beschränkt, wie bereits in Unterkapitel \ref{sec:reqstructure} erwähnt wurde. 
+
+\subsubsection{HTTP Statuscode}
+REST APIs müssen Informationen mit den richtigen Statuscode kommunizieren. Es gibt verscheiden Arten von Statuscodes, die Erfolg- als auch Fehlerinformation mitteilen. Die Statuscodes können in 4 Kategorien getrennt werden:
+
+\begin{itemize}
+\item 2xx: Für Erfolgreiche Nachrichten
+\item 3xx: Für Umleitungen
+\item 4xx: Für Fehler Client-seitig
+\item 5xx: Für Fehler Server-seitig
+\end{itemize}
+
+In nachfolgende Tabelle \ref{tab:status} sind die wichtigsten Statuscodes für die Hochschul-App erläutert.
+
+  \begin{longtable}[c]{| p{0.04\textwidth} | p{0.28\textwidth} | p{0.61\textwidth} |}
+   \hline
+    200 &		  OK						& Die Anfrage war erfolgreich
+    \\ \hline
+    201	&		  Created				& Neue Ressource wurde erfolgreich angelegt
+    \\ \hline
+    202	&		  Accepted				& Die Anfrage wurde erfolgreich angenommen, die Informationen über die Tatsächliche Ausführung der Anfrage können sofort nicht zurückgesendet werden
+    \\ \hline
+    400	&		  Bad Request			& Fehlerhafte Anfrage von Client
+    \\ \hline
+    401	&		  Unauthorized			& Anfrage für diese Ressource benötigt Autorisierung
+	\\ \hline
+    403	&		  Forbidden				& Client hat keinen Zugriff auf die angeforderte Ressource
+    \\ \hline
+    404	&		  Not Found				& Angefragte URI wurde von Server nicht gefunden
+    \\ \hline
+    405	&		  Mehtod Not Allowed		& Die Anfrage auf die Ressource ist nicht zulässig
+    \\ \hline
+    409	&		  Conflict				& Die Anforderung aufgrund eines Konflikts mit dem aktuellen Status der Ressource konnte nicht verarbeitet werden
+    \\ \hline
+    414	&		  Request-URI Too Large	& Die Länge der Angefragte URI ist länger als das zulässige Limit für den Server
+    \\ \hline
+    415	&		  Unsupported Media Type	& Angeforderte oder Übergebenes Format wird von den Server nicht unterstützt
+	\\ \hline
+    429	&		  To Many Requests		& Zu viele Anfragen wurden von Client an die Ressource gestellt
+    \\ \hline
+    500	&		  Internal Server Error	& Anfrage kann aufgrund eines unerwarteten Fehler auf dem Server nicht verarbeitet werden können
+    \\ \hline
+    503	&		  Service Unavailable	& Die Anfrage an den Service kann vorübergehen nicht verarbeitet werden
+    \\ \hline
+\caption[HTTP-Statuscodes]{Erläuterung der HTTP-Statuscodes} 
+\label{tab:status}
+  \end{longtable}
+
+Außerdem ist die Übermittlung von richtigen Statuscodes zusätzlich mit einer Fehlernachricht, ist für den Erfolg der API von entscheidender Bedeutung. Durch gut definierte Statuscodes und Fehlernachrichten kann debugging und Fehlerbehebungen deutlich erleichtert werden, Client- als auch Server-seitig. Der Aufbau solcher Fehlernachricht mit Statuscode sieht folgendermaßen aus:
+\begin{verbatim}
+{ 
+   “status_code” : {status}, 
+   “status_message”: “status message”, 
+   "errors": [{ 
+            "error_code": {error code}, 
+            "error_message": "Error message" 
+   }] 
+} 
+\end{verbatim}
+
+API, die mehrere Aufrufe an andere APIs oder Systeme weiterleitet oder koordiniert, sollte einen einzelnen Statuscode zurückgeben, der das Ergebnis der kombinierten Ausführung von Aufrufen darstellt.
+
+\subsubsection{Asynchrone Callback}
+Es gibt zwei Standards für die Asynchrone Callbacks, entweder eine Callback URL oder eine Push Notification. Bei einer Callback URL können die Clients eine URL der API zur Verfügung stellen, über welche die API über Ergebnisse oder Ereignisse den Client informieren kann. Bei Push Notification soll der Client über die Ereignisse informiert werden, auch wenn dieser gerade nicht aktiv auf dem Service ist. Der Standard von Push Notification für Asynchrone Callbacks wird in der Hochschul-App verwendet. Push Notification stellen eine gute Möglichkeit dar, z. B. die Studenten über Stundenplanänderungen in der Hochschul-App zu informieren. Weitere Informationen sind in den Kapitel \ref{sec:push} zu finden.
+
+\subsection{HATEOAS}
+Hypermedia as the Engine of Application State, mit dem eine API auffindbar gemacht wird. Bei Request auf eine Ressource, werden Hyperlinks zu verwandten Ressourcen oder Endpunkten bereitgestellt. Für die Clients bedeutet es, dass keine Vorkenntnisse des Datenmodells oder Schemas erforderlich ist, um mit der API navigieren und interagieren zu können. Wenn der Client bei der Implementation der Anwendung, HATEOS berücksichtigt, werden die in API abgeänderten Ressourcen automatisch in der Anwendung von Client angepasst.\\
+
+Für die Vorteile des HATEOS in der Hochschul-App, kann folgendes Situation betrachtet werden. Ein Benutzer der Hochschul-App kann sich einen Personalisierten Stundenplan anlegen. Dieses Stundenplan wird in User-Service abgespeichert, wobei es werden nicht alle Informationen der Vorlesungen gespeichert, sondern nur die IDs der Vorlesungen. Bei Darstellung des Personalisierten Stundenplans von den Client, muss der Client zuerst eine Anfrage an User-Service stellen und mit der erhaltener Antwort eine neue Query mit den IDs aufbauen und an Stundenplan-Service senden um die Informationen der Vorlesungen zur erhalten. Durch die Verwendung von HATEOS, stellt der Client eine Anfrage an User-Service und in der Antwort ist ein Hyperlink enthalten, der bereits die Query für die benötigten IDs der Vorlesungen enthält.
+Bsp.:
+
+\begin{verbatim}
+{
+    links: {
+        lectures: "/stundenplan-service/v1/lectures?ids=1,2,3
+    }
+}
+\end{verbatim}
+
+D. h. der Client muss nur den Hyperlink aufrufen ohne eine Aufwendige Query zu erstellen um Vorlesungen Informationen zu erhalten und sollte sich die Ressource \verb|/lectures| ändern, hat es keine Auswirkung auf die Funktionalität des Clients, da die neue Ressource wieder als Hyperlink den Client zur Verfügung steht.  Die User-Service Ausarbeitung ist in Bachelor Andreas ausführlich behandelt.
+\todo[inline]{ref: andreas bachelor kap 3}

@@ -1,0 +1,8 @@
+% Architektur
+\section{Architektur Hochschul-App}
+\label{sec:architektur}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/App_architektur_1.pdf}
+\caption{Microservice Architektur für die Hochschul-App\label{fig:architektur_app}}
+\end{figure}

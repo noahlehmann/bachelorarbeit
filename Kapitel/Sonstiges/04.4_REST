@@ -1,0 +1,8 @@
+% RESTful
+\section{RESTful}
+\label{sec:restful}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/rest_api.pdf}
+\caption{Wachstum der ProgrammableWeb API Archive von 2005\label{fig:api_statistic}}
+\end{figure}

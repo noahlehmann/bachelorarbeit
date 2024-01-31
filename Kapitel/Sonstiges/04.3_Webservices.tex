@@ -1,0 +1,197 @@
+% Webservices
+\section{Web Services}
+\label{sec:webservices}
+Web Services ermöglichen verschiedene Programme miteinander in einen Netzwerk zu verbinden und stellen eine einheitliche Schnittstelle für die Nutzung zur Verfügung. Dabei spielt keine Rolle die Wahl der Plattform wie Windows, Linux oder Mac als auch die Wahl der Programmiersprachen wie Java, PHP oder Python. Somit können einzelne Programme, Module oder Komponenten in unterschiedlichen Sprachen von unterschiedlichen Teams entworfen werden, so wie auf beliebigen Systemen installiert werden. Eine der zentralen Funktionen des Web Services ist die Synchronisation von Client und Server. Ein Web Service stellt Informationen den Client zur Verfügung über Datentypen, möglichen Operationen sowie die Parameter und Rückgabewerte und wie diese Aufgerufen werden können. Für die Kommunikation ist es wichtig ein Transportprotokoll und den Format für die übertragene Daten festzulegen. Als Transportprotokoll kann HTTP(S), SMTP, TCP oder JMS genutzt werden. Übliche Datenformate sind XML oder JSON. Allein mit Web Services ist Implementierung einer verteilter Anwendung nicht Ausreichend. Da einerseits die Web Services stellen Dienste und Funktionen über definierte Schnittstellen und Standards über ein Netzwerk zur Verfügung und dienen hauptsächlich für die Kommunikation der Systeme und weniger für die Abarbeitung von logischen Konzepten andererseits bieten Web Services nicht ausreichend Maß an loser Kopplung. Wie bereits in Unterkapitel \ref{sec:archfazit} erwähnt wurde, werden Web Services oft im Zusammenhang mit SOA gebracht.
+\todo[inline]{Referenz: s23-33 Java Webservices}
+Aus dem Grund, weil die technischen Aspekte von SOA mit Web Services ermöglicht werden können.
+\todo[inline]{Referenz: s8-11 SOA in der Praxis}
+
+\subsection{SOA}
+\begin{quote}
+Service Oriented Architecture (SOA) is an architectural paradigm that has gained significant attention within the information technology (IT) and business communities.
+\end{quote}
+%\todo[inline]{Zitiert: http://docs.oasis-open.org/soa-rm/soa-ra/v1.0/cs01/soa-ra-v1.0-cs01.html#_Toc343761540}
+Eine konkrete oder einheitliche Definition für SOA existiert derzeit nicht,
+\todo[inline]{Referenz: s11 SOA mit Web Services}
+ deswegen wird SOA als Paradigma der Architektur bezeichnet. Außerdem ist SOA nicht wirklich eine Architektur, sondern eher ein Design/Konzept für verteilte Systeme. 
+\todo[inline]{Referenz: s2 SOA in der Praxis}
+Da unter SOA jeder was anderes versteht und meistens unterschiedlich Implementiert wird, hat OASIS ein SOA-Referenzmodell definiert um SOA zu vereinheitlichen.
+%https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=soa-rm
+
+Durch SOA wird es ermöglicht eine funktionale Zerlegung eines Gesamten System in einzelne funktionale Komponenten, genannt als Services und auf das Netzwerk zu verteilen. 
+\todo[inline]{Referenz: s121 Grundlagen des Modularen Softwareentwurfs}
+Wobei die einzelnen Services Plattform-, sprachen- und Frameworkunabhänging von einander Entwickelt und Wiederverwendet werden können. Das Grundkonzept von SOA hat der Ingo Melzer als einen Tempel dargestellt, der in Abbildung \ref{fig:soatempel} zu sehen ist.
+\todo[inline]{Referenz: s11 SOA mit Web Sevices}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/soa_tempel.png}
+\caption{SOA Tempel\label{fig:soatempel}}
+\end{figure}
+\begin{quote}
+Das Fundament wird von offenen Standards, Sicherheit und Zuverlässigkeit gebildet. Die verteilten Dienste, die lose Kopplung, die plattformunabhängigkeit und die prozessorientierte Struktur sind die tragenden Säulen.
+\end{quote}
+\todo[inline]{Zitat: s11-12 SOA mit Web Sevices}
+
+\subsubsection{Technische Konzepte}
+Um das Potenzial von SOA nutzen zu können, werden verschiedene Technischen Konzepte verwendet. Die wichtigsten technischen Konzepte von SOA sind: 
+\todo[inline]{Referenz: s11 SOA in der Praxis}
+
+\begin{itemize}
+\item \subsubsection*{Integrations-Konzepte} Unter Integration-Konzepte ist die Sicherstellung der Kommunikation unterschiedlichen Systemen ohne großen Aufwand miteinander gemeint mit den Fokus auf den Datenfluss.
+\item \subsubsection*{Services} Services dürfen nicht mit Web Services verwechselt werden. Web Services ist Technischer Konzept zur Umsetzung der Kommunikation in SOA, wobei Services in SOA funktionale Komponente sind.
+\todo[inline]{Referenz: s123 Grundlagen des Modularen Softwareentwurfs}
+\item \subsubsection*{Lose Kopplung} Wurde bereits in Unterkapitel \ref{sec:prinzipien} ausführlich behandelt.
+\end{itemize}
+
+\subsubsection{Zusammenfassung}
+Service orientierte Architektur mit Unterstützung von Web Services bieten gute Voraussetzungen für die Abdeckung von nicht-funktionale Anforderungen sowie Prinzipien für eine Softwarearchitektur aus Kapitel \ref{sec:architektur}. An der Stelle wird genauer erläutert welche nicht-funktionale Anforderungen und warum diese von SAO und Web Services Ansätzen erfühlt werden:\\
+
+\begin{itemize}
+\item \subsubsection*{Skalierbarkeit} Durch die Unterteilung der Funktionalitäten einer Anwendung in einzelne Services, steht der Skalierbarkeit der Anwendung nichts im Wege. Die einzelne Services können auf unterschiedliche Server mit benötigten Ressourcen verteilt werden. Sollten für einen Service die Ressourcen nicht mehr ausreichen, kann der Service auf einen anderen Server umgezogen werden ohne Beeinflussung der Funktionalität der Anwendung. Weitere Möglichkeiten sind, die Auslagerung der Services in eine Cloud oder auch als IaaS (Infrastructure as a Service) bekannt. Anbieter wie Amazon Web Services (AWS) stellen Speicher und Rechenleistung auf Ihren Servern zu Verfügung. Mit AWS Elastic Beanstalk können die Anwendungen in der AWS Cloud ausgelagert werden und Elastic Beanstalk übernimmt automatisch den Management über Bereitstellung zusätzlicher Kapazität, Lastenverteilung sowie die Skalierung. 
+%AWS https://docs.aws.amazon.com/de_de/elasticbeanstalk/latest/dg/Welcome.html
+Die Services können auch in Docker-Container verschoben werden. Die Container lassen sich leicht von System auf System übertragen, benötigen weniger Ressourcen als virtuelle Maschinen und sollten zusätzliche Instanzen des Services benötigt werden, dann können einfach neue Container gestartet werden. Sobald diese nicht mehr benötigt werden, können diese gestoppt werden.
+%Docker https://www.dev-insider.de/was-sind-docker-container-a-597762/
+\todo[inline]{Umschreiben ! Skalierbarkeit von MS beschrieben und nicht von SOA}
+\item \subsubsection*{Performance} Man spricht davon das die Ladezeiten einer Anwendung dürfen in der Regel nicht länger als Drei Sekunden dauern. Die Performance von SOA hängt zunächst von unterschiedlichen Faktoren ab. Manche können beeinflusst und optimiert werden, andere eher weniger. Die heutige Technologie ist ausreichend ausgereift für die Implementierung schneller und effizienter verteilte Anwendungen. Der Beispiel dafür wäre der Weltbekannte Streamings-Dienst Netflix, der auf die bereits erwähnte IaaS von AWS verwendet. Die Filme oder Serien lassen sich in Echtzeit in der Auflösung 4K Streamen. 
+%https://aws.amazon.com/de/solutions/case-studies/netflix/
+Außerdem ermöglicht SOA bei einen unerwarteten hohen Zugriff, Management von Lastenverteilung der Services. Somit wird die Performance durch Auslastung der Anwendung nicht beeinflusst.
+\item \subsubsection*{Verfügbarkeit} Eine Anwendung soll im Idealfall 24/7 erreichbar sein. Ein hoher Maß an Verfügbarkeit kann durch SOA erbracht werden. Allein da die Services unabhängige Komponente einer Anwendung sind und bei Ausfall eines Services, die Funktionalität anderer Services trotzdem in der Anwendung zu Verfügung stehen. Außerdem durch Replikation von den Services kann bei Ausfall ein anderer Service mit gleicher Funktionalität verwendet werden.  
+\item \subsubsection*{Sicherheit} Sicherheit ist einer der Wichtigsten Aspekten in einer Software, auch für die Anwendungen die keine vertrauliche Informationen beinhalten, sollte immer einer Sicherheitskonzept entworfen werden. Bei absicherung eines Web Services spielen folgende Aspekte wichtige Rolle:
+\begin{itemize}
+\item Authentifizierung
+\item Autorisierung
+\item Integrität
+\end{itemize}
+Es ist nicht unmöglich eine sichere Service-orientierte Architektur zu Konzeptiren, es muss frühzeitig auf Sicherheitsaspekte eingegangen werden. Außerdem existiert bereits eine Reihe bewährten Technologien, Techniken und Standards um Web Services sicher zu gestalten. 
+\todo[inline]{Referenz: s188 SOA WS}
+Um eine Vertraulichkeit zwicshen Nachrichtenaustausch aufzubauen können verschiedene Methoden des symmetrischen oder asymetrischen Verschlüsselungsverfahren verwendet werden.
+\todo[inline]{Referenz: s190 SOA WS}
+Außerdem sind folgende Standards in Web Services bereits etabliert und erleichtern die Implementierung der Sicherheitsaspekte:
+\begin{itemize}
+\item WS-Security
+\item WS-Policy
+\item WS-Trust
+\item WS-SecureConversation
+\item WS-Privacy
+\item WS-Federation
+\item WS-Authorization
+\end{itemize}
+\todo[inline]{Referenz: s208-218 SOA WS}
+Wie Authentifizierung, Autorisierung und Vertraulichkeit in einen Web Service gewährleistet werden kann, wird ausführlicher in der Bachelorarbeit Plannung der Nutzerverwaltung und des Frontends der Stundenplan App der Hochschule Hof in Kapitel 2 behandelt. Für die Absicherung der Integrität der Daten können eine Reihe von Persistence-Frameworks verwendet werden, außerdem durch Prinzip der Kapselung wird vorgebeugt die Manipulation von Daten. 
+
+\item \subsubsection*{Wartbarkeit} Wartbarkeit ist einer der Wichtigsten nicht-funktionalen Anforderungen. Denn in der Praxis ist oft der Fall dass die Anforderungen an die Anwendungen mit der Zeit sich ändern oder neue Funktionalitäten dazu kommen. Außerdem des öfteren werden erst nach einiger Zeit Fehler in der Anwendungen erkannt die während der Entwicklung verborgen waren. Durch die modulare und flexible gestaltung der Services in SOA sind diese leicht Austausch- oder Änderbar. 
+\end{itemize}
+
+Des weiteren wird erläutert welche Prinzipien der Softwarearchitektur durch SAO und Web Services Ansätzen bereits von beginn gegeben sind.
+
+\begin{itemize}
+\item \subsubsection*{Kapselung} Services stellen eine definierte Schnittstelle für den Zugriff, jedoch die genauen Details der Implementierung sind für Benutzer unsichtbar.
+\todo[inline]{Referenz: s13 SOA WS}
+
+\item \subsubsection*{Lose Kopplung} Die Services können auf Verschiedenen Systemen in Verschiedenen Implementierungssprachen realisiert werden dadurch wird die Kopplung zwischen Hardware- und Softwareebenen verringert
+\item \subsubsection*{Modularisierung} Durch Trennung der logischen Funktionalitäten in einzelne Komponente und Verteilung dieser auf verschiedene Services, werden die Abhängigkeiten der Komponenten reduzieren, so wie es entsteht fachliche Trennung der Funktionalitäten. 
+\item \subsubsection*{Layering} Die Umsetzung von Service-orientierten Architektur können in Mehrere Schichten realisiert werden, die bereits in Abbildung \ref{fig:schichten} zu sehen waren.
+\begin{itemize}
+\item \textbf{Presentation Layer:} definierte Schnittstelle für die Clients oder andere Systeme.
+\item \textbf{Business Layer:} logische Implementierung der Funktionalitäten.
+\item \textbf{Persistence Layer:} Manipulation und Zugriff auf die Daten.
+\item \textbf{Database Layer:} Datenbankenebene für die Datenhaltung.
+\end{itemize}
+\end{itemize}
+
+Somit bietet die Service-orientierte Architektur mit Web Services einen idealen Ansatz für die Umsetzung einer sicherer und zukunftsfähiger Hochschul-App. Wobei die Realisierung von Web Services kann in zwei Arten unterschieden werden, SOAP und REST.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/webservice_arten.pdf}
+\caption{Bekannte Webservice Arten\label{fig:wsarten}}
+\end{figure}
+
+\subsection{SOAP und REST}
+SOAP ist ein Netzwerkprotokoll der auf XML basiert. RESTful dagegen ist ein Webservice-Light-Technologie Architekturstil, dass sich nur auf Kommunikationsprotokoll HTTP(S) beschränkt und meisten mit JSON-Datenformat in Verbindung gebracht wird.
+\todo[inline]{Referenz: s23-26 Java Webservices}
+
+\subsubsection{SOAP}
+\begin{quote}
+[Simple Object Access Protocol] provides a simple and lightweight mechanism for exchanging structured and typed information between peers in a decentralized, distributed environment using XML
+%https://www.w3.org/TR/2000/NOTE-SOAP-20000508/
+\end{quote}
+SOAP wurde durch W3C als industriellen Standard definiert, in dem SOAP in Drei wesentlichen teile aufgeteilt ist:
+\begin{itemize}
+\item \subsubsection*{SOAP Envelope} Definiert ein Framework der beschreibt, was in einer Nachricht enthalten ist, wer sollte damit umgehen, und ob die Parameter optional oder obligatorisch sind. Die SOAP Nachricht besteht aus Envelope, Header und Body und ist als XML-Dokument realisiert. Es wird dadurch ermöglicht für alle Systeme gleichen Sprachsatz zu definieren für Anfragen und Antworten, somit können Nachrichten mit beliebigen XML-Inhalt ausgetauscht werden.
+%übersetzt aus https://www.w3.org/TR/2000/NOTE-SOAP-20000508/
+Durch die Trennung von Body und Header entsteht eine saubere Trennung zwischen Anwendungsdaten und Web Service spezifischen Daten.
+\todo[inline]{Referenz: s63 Java Webservices}
+\item \subsubsection*{SOAP Encoding Regeln} Diese Regeln definiert einen Serialisierungsmechanismus, mit dem Anwendungsdefinierten Datentypen zwischen den Services ausgetauscht werden können. Wobei XML ermöglicht sehr flexible Codierung von Daten. Unter W3C beschriebenen Codierungsregeln können in Verbindung mit RPC-Darstellung verwendet werden.
+%übersetzt aus https://www.w3.org/TR/2000/NOTE-SOAP-20000508/
+\item \subsubsection*{SOAP RPC-Darstellung} Eines der Entwurfsziele von SOAP besteht darin, RPC-Aufrufe unter Verwendungen der Erweiterbarkeit und Flexibilität von XML zu kapseln und auszutauschen.
+%übersetzt aus https://www.w3.org/TR/2000/NOTE-SOAP-20000508/
+Die Verwendung von SOAP für RPC sind folgende Transportprotokollbindungen möglich:
+\begin{itemize}
+\item TCP
+\item HTTP(S)
+\item SMTP
+\item FTP
+\item JMS
+\item RMI
+\end{itemize}
+\todo[inline]{Referenz: s85 SOA WS}
+\end{itemize}
+Ein weiterer industrieller Standard von W3C Web Services Descpricpion Language (WSDL) stellt ein Model und ein XML-Format zur Beschreibung von Web Services bereit. Zusammen mit SOAP entsteht eine Grundlage für Web Service Anwendungen.
+\todo[inline]{Referenz: s101 SOA WS}
+Jedoch hat die Realität gezeigt das SOAP weder leicht in der Umsetzung, als auch bietet keine tatsächlichen Zugriff auf die Objekte, ist eher ein Kommunikationsprotokoll für Web Service Anwendungen. Durch die Bindung von unterschiedlichen Transportprotokollen, können unterschiedliche Arten von verteilten Anwendungen mit Hilfe von SOAP Entwickelt werden. Wobei die Hochschul-App eine verteilte Anwendung für das WWW sein sollte, somit wird nur der HTTP(S) Protokoll benötigt. Das Problem bei SOAP besteht darin, das SOAP Nachricht mit XML-Datenformat unnötig viel Overhead produziert. Für einfache Request wie getAllLectures, die keine Parameter oder Body enthalten, muss trotzdem Body definiert werden. Bei kleinen Datendurchsatz stellt dies noch keine Probeleme dar, jedoch mit Steigerung der Daten wird es problematisch, kompliziert und Ineffizient. 
+\todo[inline]{Referenz: s57 Java Webservices}
+Aus diesem Grund wurde im Jahr 2000 von Roy Thomas Fielding ein vereinfachtes Architekturstil REST eingeführt das wie bereits am Anfang des Kapitel erwähnt wurde, auf JSON-Datenformat und Kommunikationsprotokoll HTTP(S) basiert.
+\todo[inline]{Referenz: s77 Java Webservices}
+%Außerdem um Service-orientierte Architektur im vollen Umfang zu realisieren reichen Grundbausteine von Web Services wie SOAP oder XML nicht aus. <<<< FINDE DEN AUSZUG NICHT MEHR >>>>>
+
+
+\subsubsection{REST}
+
+Ein Representational State Transfer (REST) Web Service ist auch unter den Namen Web API verbreitet. Die Webseite www.programmableweb.com bietet einen der größten Archiv von Web APIs in den Internet. In Juli 2019 hat die Webseite eine Statistik veröffentlicht für den Wachstum von Web APIs Archiv seit 2005.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\pictureWidth cm]{Bilder/programmablewebapis.png}
+\caption{Wachstum der ProgrammableWeb API Archive von 2005\label{fig:api_statistic}}
+\end{figure}
+%https://www.programmableweb.com/news/apis-show-faster-growth-rate-2019-previous-years/research/2019/07/17
+
+Anhand der Statistik in der Abbildung \ref{fig:api_statistic} ist deutlich zu sehen das der Wachstum von Web APIs fast exponentiell steigt. Die Entscheidungsmatrix \ref{tab:restvssoap} dient dazu, eine Entscheidung zu treffen welches Web Sevice Art besser geeignet für die Hochschul-App ist.
+
+\begin{table}[H]
+\begin{center}
+  \begin{tabular}{| l | c | c |}
+    \hline
+    Kriterien & REST & SOAP \\ \hline
+    Unterstürzung Leichtgewichtiger Client 		& 1 			& 0 \\ 
+    \hline
+    Geringere Komplexität 						& 1 			& 0 \\
+    \hline
+    Effizienter			 						& 1 			& 0 \\
+    \hline
+    Unterstützung unterschiedlichen Datenformate	& 1 			& 0 \\
+    \hline
+    Caching-Mechanismen	 						& 1 			& 0 \\
+    \hline
+    Industrieller Standardisierung				& 0 			& 1 \\
+    \hline
+    Einsatzmöglichkeiten 						& 0 			& 1 \\
+    \hline
+    Sicherheit			 						& 1 			& 1 \\
+    \hline
+    												& 6			& 3 \\
+    	\hline
+  \end{tabular}
+  \end{center}
+\caption[Tabelle]{Prinzipien}
+\label{tab:prinzipien}
+\end{table}
+
+
+
+Bedeutung der Bewertungszahlen: 
+\begin{itemize}
+\item \textbf{1:} trifft zu
+\item \textbf{0:} trifft nicht zu
+\end{itemize} 
+
+REST schneidet mit 3 Punkten besser als SOAP ab. Aus dem Grund da der REST für leichtgewichtige Clients wie Browser oder Smartphones entwickelt wurde und ist auch leichter für diese zu Implementieren, da der ganze Overhead entfällt und es zahlreiche Caching-Mechanismen unterstützt werden. Somit stellt REST eine interessantere Alternative für den Design der Hochschul-App.
